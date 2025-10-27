@@ -1,17 +1,17 @@
-/**
- * @param {import("knex").Knex} knex
- * @returns {Promise<void>}
- */
-export async function up(knex) {
-    return knex.schema.createTable("spreadsheets", (table) => {
-        table.string("spreadsheet_id").primary();
+import { Knex } from "knex";
+
+export async function up(knex: Knex): Promise<void> {
+    await knex.schema.createTable("tariff_snapshots", (table) => {
+        table.increments("id").primary();
+        table.date("tariff_date").notNullable();
+        table.jsonb("payload").notNullable();
+        table.timestamp("updated_at", { useTz: true }).notNullable().defaultTo(knex.fn.now());
+        table.unique(["tariff_date"], {
+            indexName: "tariff_snapshots_tariff_date_unique",
+        });
     });
 }
 
-/**
- * @param {import("knex").Knex} knex
- * @returns {Promise<void>}
- */
-export async function down(knex) {
-    return knex.schema.dropTable("spreadsheets");
+export async function down(knex: Knex): Promise<void> {
+    await knex.schema.dropTable("tariff_snapshots");
 }

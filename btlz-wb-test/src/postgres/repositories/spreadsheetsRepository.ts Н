@@ -1,0 +1,9 @@
+import knex from "#postgres/knex.js";
+
+export interface Spreadsheet {
+    spreadsheet_id: string;
+}
+
+export async function listSpreadsheets(): Promise<Spreadsheet[]> {
+    return knex<Spreadsheet>("spreadsheets").select("spreadsheet_id");
+}
