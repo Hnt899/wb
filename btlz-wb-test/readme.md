@@ -13,6 +13,7 @@
    cp example.env .env
    ```
    Обязательные переменные:
+   - `POSTGRES_HOST` – адрес PostgreSQL (по умолчанию `postgres` при запуске через `docker compose`).
    - `WB_API_TOKEN` – токен доступа WB (формат `Authorization` заголовка).
    - `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY` – данные сервисного аккаунта Google (ключ можно оставить в формате с `\n`).
    - `WB_FETCH_MINUTE_OFFSET` – минута часа для запроса тарифов (по умолчанию `0`).
@@ -54,11 +55,23 @@ npm run dev
 - `tariff_snapshots(id, tariff_date, payload, updated_at)` – ежедневные снапшоты ответа Wildberries. При повторном сборе в тот же день запись обновляется.
 
 ## Проверка работы
-1. Запустите проект и дождитесь сообщения в логах о сохранении снапшота.
-2. Убедитесь, что в таблицу `tariff_snapshots` добавлена запись за текущий день.
-3. Проверьте выбранные Google Sheets – лист `stocks_coefs` должен содержать обновлённые коэффициенты в порядке возрастания.
+1. Запустите проект:
+   ```bash
+   docker compose up --build
+   ```
+2. Отслеживайте логи приложения и дождитесь записи вида `Stored tariff snapshot`:
+   ```bash
+   docker compose logs -f app
+   ```
+3. Убедитесь, что в базе появился снапшот за текущий день:
+   ```bash
+   docker compose exec postgres psql -U postgres -d postgres \
+     -c "SELECT tariff_date, updated_at FROM tariff_snapshots ORDER BY updated_at DESC LIMIT 5;"
+   ```
+4. Проверьте выбранные Google Sheets – лист `stocks_coefs` должен содержать обновлённые коэффициенты в порядке возрастания.
 
 ## Дополнительные команды
 - Управление миграциями/сидами локально: `npm run knex:dev <command>`.
 - Сборка TypeScript: `npm run build`.
 - Запуск приложения из собранного кода: `npm start`.
+

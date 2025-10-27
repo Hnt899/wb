@@ -49,6 +49,9 @@ const parsed = envSchema.parse({
 
 const env = {
     ...parsed,
+    POSTGRES_HOST: parsed.POSTGRES_HOST ?? "postgres",
+    POSTGRES_PORT: parsed.POSTGRES_PORT ?? 5432,
+    APP_PORT: parsed.APP_PORT ?? 5000,
     WB_FETCH_MINUTE_OFFSET: parsed.WB_FETCH_MINUTE_OFFSET ?? 0,
     GOOGLE_SHEETS_UPDATE_MINUTE_OFFSET: parsed.GOOGLE_SHEETS_UPDATE_MINUTE_OFFSET ?? 5,
     GOOGLE_SHEETS_TARGET_SHEET: parsed.GOOGLE_SHEETS_TARGET_SHEET ?? "stocks_coefs",
