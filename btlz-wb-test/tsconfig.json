@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "module": "NodeNext",
+        "target": "es2017",
+        "lib": ["es2022", "dom"],
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": true,
+        "skipLibCheck": true,
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "paths": {
+            "#*": [
+                "./src/*",
+                "./dist/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/**/*.test.*",
+        "src/**/*.spec.*"
+    ]
+}
