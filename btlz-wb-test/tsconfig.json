@@ -3,6 +3,7 @@
         "strict": true,
         "module": "NodeNext",
         "target": "es2017",
+        "lib": ["es2022", "dom"],
         "esModuleInterop": true,
         "allowJs": true,
         "checkJs": true,
@@ -18,7 +19,7 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/**/*.js",
+        "src/**/*.js"
     ],
     "exclude": [
         "node_modules",
